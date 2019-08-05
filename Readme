@@ -1,0 +1,113 @@
+BS01: Извлечь из строки первое слово:
+Пример:
+    1> BinText = <<"Some text">>.
+    <<"Some Text">>
+    2> bs01:first_word(BinText).
+    <<”Some”>>
+
+BS02: Разделить строку на слова:
+Пример:
+    1> BinText = <<"Text with four words">>.
+    <<"Text with four words">>
+    2> bs02:words(BinText).
+    [<<"Text">>, <<"with">>, <<"four">>, <<"words">>]
+
+BS03: Разделить строку на части, с явным указанием разделителя:
+Пример:
+    1> BinText = <<"Col1-:-Col2-:-Col3-:-Col4-:-Col5">>.
+    <<"Col1-:-Col2-:-Col3-:-Col4-:-Col5">>
+    2> bs03:split(BinText, “-:-”).
+    [<<"Col1">>, <<"Col2">>, <<"Col3">>, <<"Col4">>, <<"Col5">>]
+
+BS04: Разобрать JSON:
+Пример:
+    1> Json = <<"
+    1> {
+    1> 'squadName': 'Super hero squad',
+    1> 'homeTown': 'Metro City',
+    1> 'formed': 2016,
+    1> 'secretBase': 'Super tower',
+    1> 'active': true,
+    1> 'members': [
+    1> {
+    1> 'name': 'Molecule Man',
+    1> 'age': 29,
+    1> 'secretIdentity': 'Dan Jukes',
+    1> 'powers': [
+    1> 'Radiation resistance',
+    1> 'Turning tiny',
+    1> 'Radiation blast'
+    1> ]
+    1> },
+    1> {
+    1> 'name': 'Madame Uppercut',
+    1> 'age': 39,
+    1> 'secretIdentity': 'Jane Wilson',
+    1> 'powers': [
+    1> 'Million tonne punch',
+    1> 'Damage resistance',
+    
+    1> 'Superhuman reflexes'
+    1> ]
+    1> },
+    1> {
+    1> 'name': 'Eternal Flame',
+    1> 'age': 1000000,
+    1> 'secretIdentity': 'Unknown',
+    1> 'powers': [
+    1> 'Immortality',
+    1> 'Heat Immunity',
+    1> 'Inferno',
+    1> 'Teleportation',
+    1> 'Interdimensional travel'
+    1> ]
+    1> }
+    1> ]
+    1> }
+    1> ">>.
+    2> bs04:decode(Json, proplist).
+    [{<<"squadName">>,<<"Super hero squad">>},
+    {<<"homeTown">>,<<"Metro City">>},
+    {<<"formed">>,2016},
+    {<<"secretBase">>,<<"Super tower">>},
+    {<<"active">>,true},
+    {<<"members">>,
+    [[{<<"name">>,<<"Molecule Man">>},
+    {<<"age">>,29},
+    {<<"secretIdentity">>,<<"Dan Jukes">>},
+    {<<"powers">>,
+    [<<"Radiation resistance">>,<<"Turning tiny">>,
+    <<"Radiation blast">>]}],
+    [{<<"name">>,<<"Madame Uppercut">>},
+    {<<"age">>,39},
+    {<<"secretIdentity">>,<<"Jane Wilson">>},
+    {<<"powers">>,
+    [<<"Million tonne punch">>,<<"Damage resistance">>,
+    <<"Superhuman reflexes">>]}],
+    [{<<"name">>,<<"Eternal Flame">>},
+    {<<"age">>,1000000},
+    {<<"secretIdentity">>,<<"Unknown">>},
+    {<<"powers">>,
+    [<<"Immortality">>,<<"Heat Immunity">>,<<"Inferno">>,
+    <<"Teleportation">>,<<"Interdimensional travel">>]}]]}]
+    3> bs04:decode(Json, map).
+    #{<<"active">> => true,<<"formed">> => 2016,
+    <<"homeTown">> => <<"Metro City">>,
+    <<"members">> =>
+    [#{<<"age">> => 29,<<"name">> => <<"Molecule Man">>,
+    <<"powers">> =>
+    [<<"Radiation resistance">>,<<"Turning tiny">>,
+    <<"Radiation blast">>],
+    <<"secretIdentity">> => <<"Dan Jukes">>},
+    #{<<"age">> => 39,<<"name">> => <<"Madame Uppercut">>,
+    <<"powers">> =>
+    [<<"Million tonne punch">>,<<"Damage resistance">>,
+    <<"Superhuman reflexes">>],
+    <<"secretIdentity">> => <<"Jane Wilson">>},
+    #{<<"age">> => 1000000,<<"name">> => <<"Eternal Flame">>,
+    <<"powers">> =>
+    [<<"Immortality">>,<<"Heat Immunity">>,<<"Inferno">>,
+    <<"Teleportation">>,<<"Interdimensional travel">>],
+    <<"secretIdentity">> => <<"Unknown">>}],
+    <<"secretBase">> => <<"Super tower">>,
+    <<"squadName">> => <<"Super hero squad">>}
